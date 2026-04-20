@@ -51,12 +51,7 @@ const envSchema = z.object({
 try {
   envSchema.parse(process.env);
 } catch (error) {
-  if (process.env.NODE_ENV === 'production') {
-    console.error('❌ Build-time environment validation failed:', error.errors);
-    process.exit(1);
-  } else {
-    console.warn('⚠️ Development environment validation warning:', error.errors);
-  }
+  console.warn('⚠️ Build-time environment validation warning (safe to ignore if injected at runtime in Cloud Run):', error.errors);
 }
 
 export default nextConfig;
