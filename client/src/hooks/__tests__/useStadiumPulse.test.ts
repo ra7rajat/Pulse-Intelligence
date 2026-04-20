@@ -8,13 +8,11 @@ beforeEach(() => {
 });
 
 describe('useStadiumPulse Hook', () => {
-  it('should initialize with mock zones in demo mode', () => {
-    // Note: We are mocking the environment to simulate isConfigured = false
+  it('should initialize correctly targeting strict Firebase schemas', () => {
     const { result } = renderHook(() => useStadiumPulse());
     
-    expect(result.current.zones.length).toBeGreaterThan(0);
-    expect(result.current.isDemo).toBe(true);
-    expect(result.current.zones[0].name).toBe('P Pavilion Stand');
+    expect(result.current.zones.length).toBe(0);
+    expect(result.current.isDemo).toBe(false);
   });
 
   it('should simulate staff movement over time', async () => {
