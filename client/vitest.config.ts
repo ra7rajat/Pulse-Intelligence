@@ -10,7 +10,7 @@ export default defineConfig({
     globals: true,
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@core': path.resolve(__dirname, '../core'),
+      '@core': path.resolve(__dirname, './src/core'),
     },
   },
 });

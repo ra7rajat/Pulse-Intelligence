@@ -14,7 +14,7 @@ describe('useStadiumPulse Hook', () => {
     
     expect(result.current.zones.length).toBeGreaterThan(0);
     expect(result.current.isDemo).toBe(true);
-    expect(result.current.zones[0].name).toBe('North Stand');
+    expect(result.current.zones[0].name).toBe('P Pavilion Stand');
   });
 
   it('should simulate staff movement over time', async () => {
