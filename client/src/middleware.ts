@@ -12,13 +12,14 @@ export function middleware() {
     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com;
     object-src 'none';
     base-uri 'self';
-    connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.google.com https://*.gstatic.com wss://*.firebaseio.com http://localhost:8080;
+    connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.google.com https://*.gstatic.com wss://*.firebaseio.com;
     img-src 'self' data: blob: https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com https://*.googleusercontent.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     font-src 'self' data: https://fonts.gstatic.com;
     worker-src 'self' blob:;
     frame-src https://*.google.com https://*.googleapis.com;
     frame-ancestors 'none';
+    block-all-mixed-content;
     form-action 'self';
   `.replace(/\s{2,}/g, ' ').trim();
 

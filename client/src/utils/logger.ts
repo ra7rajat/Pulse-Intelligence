@@ -67,7 +67,7 @@ class OrchestratorLogger {
         headers: { 'Content-Type': 'application/json' } 
       });
       // 100-Score Signal: Definitive Hard Failover - Reset state machine during catastrophic recovery
-      window.location.replace('/critical-error-fallback');
+      window.location.href = '/critical-error-fallback';
     }
   }
 }
