@@ -24,19 +24,19 @@ describe('PlaybookConsole Component', () => {
   };
 
   it('renders empty state correctly', () => {
-    render(<PlaybookConsole playbook={null} onGenerate={() => {}} isLoading={false} />);
+    render(<PlaybookConsole playbook={null} onGenerate={() => {}} isLoading={false} onExecute={() => {}} isExecuting={false} />);
     expect(screen.getByText(/Ready to transform raw/i)).toBeInTheDocument();
     expect(screen.getByText('Run Playbook')).toBeInTheDocument();
   });
 
   it('renders loading state correctly', () => {
-    render(<PlaybookConsole playbook={null} onGenerate={() => {}} isLoading={true} />);
+    render(<PlaybookConsole playbook={null} onGenerate={() => {}} isLoading={true} onExecute={() => {}} isExecuting={false} />);
     expect(screen.getByText('Analyzing...')).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeDisabled();
   });
 
   it('renders playbook data correctly', () => {
-    render(<PlaybookConsole playbook={mockPlaybook} onGenerate={() => {}} isLoading={false} />);
+    render(<PlaybookConsole playbook={mockPlaybook} onGenerate={() => {}} isLoading={false} onExecute={() => {}} isExecuting={false} />);
     expect(screen.getByText(mockPlaybook.prediction)).toBeInTheDocument();
     expect(screen.getByText(mockPlaybook.simulations)).toBeInTheDocument();
     expect(screen.getByText(mockPlaybook.playbook)).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('PlaybookConsole Component', () => {
 
   it('calls onGenerate when button is clicked', () => {
     const onGenerateMock = vi.fn();
-    render(<PlaybookConsole playbook={null} onGenerate={onGenerateMock} isLoading={false} />);
+    render(<PlaybookConsole playbook={null} onGenerate={onGenerateMock} isLoading={false} onExecute={() => {}} isExecuting={false} />);
     fireEvent.click(screen.getByRole('button', { name: /Run Playbook/i }));
     expect(onGenerateMock).toHaveBeenCalledTimes(1);
   });

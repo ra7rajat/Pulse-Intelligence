@@ -9,9 +9,11 @@ interface PlaybookConsoleProps {
   playbook: PlaybookData | null;
   onGenerate: () => void;
   isLoading: boolean;
+  onExecute: () => void;
+  isExecuting: boolean;
 }
 
-export const PlaybookConsole = ({ playbook, onGenerate, isLoading }: PlaybookConsoleProps) => {
+export const PlaybookConsole = ({ playbook, onGenerate, isLoading, onExecute, isExecuting }: PlaybookConsoleProps) => {
   return (
     <div className="flex flex-col gap-4 p-4">
       {/* Header row — flex so button never gets clipped */}
@@ -100,8 +102,18 @@ export const PlaybookConsole = ({ playbook, onGenerate, isLoading }: PlaybookCon
                 <p className="text-[11px] text-white leading-relaxed font-bold">
                   {playbook.playbook}
                 </p>
-                <button className="w-full mt-1 py-2 rounded-xl bg-primary text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-primary/90 transition-all">
-                  Execute Deployment <ChevronRight size={11} />
+                <button 
+                  onClick={onExecute}
+                  disabled={isExecuting}
+                  className="w-full mt-1 py-2 rounded-xl bg-primary text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-primary/90 transition-all disabled:opacity-50 disabled:scale-100"
+                >
+                  {isExecuting ? (
+                    <span className="flex items-center gap-1.5">
+                      <Activity size={10} className="animate-spin" /> Deploying...
+                    </span>
+                  ) : (
+                    <>Execute Deployment <ChevronRight size={11} /></>
+                  )}
                 </button>
               </div>
             </motion.div>

@@ -45,6 +45,7 @@ export function useStadiumPulse() {
   const [error, setError] = useState<string | null>(null);
   const [playbook, setPlaybook] = useState<PlaybookData | null>(null);
   const [isGeneratingPlaybook, setIsGeneratingPlaybook] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
 
   // Computed aggregate metrics
   const metrics = useMemo(() => {
@@ -199,6 +200,29 @@ export function useStadiumPulse() {
     }
   }, [db]);
 
+  const executeDeployment = useCallback(() => {
+    if (!playbook || isGeneratingPlaybook) return;
+    setIsExecuting(true);
+    
+    // Mathematically shift active staff into a tactical responding state
+    setStaff(prev => prev.map(s => {
+      if (s.status === 'active' || s.status === 'standby') {
+        return {
+          ...s,
+          status: 'responding',
+          responseTime: Math.floor(Math.random() * 45) + 15, // Immediate engagement metric
+        };
+      }
+      return s;
+    }));
+
+    // Resolve execution simulation after 3 seconds
+    setTimeout(() => {
+      setIsExecuting(false);
+      setPlaybook(null); // Clear playbook once executed
+    }, 3000);
+  }, [playbook, isGeneratingPlaybook]);
+
   return { 
     zones, 
     staff, 
@@ -207,7 +231,9 @@ export function useStadiumPulse() {
     isDemo: !isConfigured, 
     playbook, 
     generatePlaybook, 
-    isGeneratingPlaybook, 
+    isGeneratingPlaybook,
+    executeDeployment,
+    isExecuting, 
     metrics,
     seedDatabase,
     canSeed: isConfigured && (zones.length === 0 || zones.every(z => MOCK_ZONES.find(m => m.id === z.id && m.occupancy === z.occupancy)))

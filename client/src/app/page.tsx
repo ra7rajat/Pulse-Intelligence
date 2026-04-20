@@ -22,6 +22,7 @@ export default function Dashboard() {
   const {
     zones, staff, loading, isDemo,
     playbook, generatePlaybook, isGeneratingPlaybook,
+    executeDeployment, isExecuting,
     metrics, seedDatabase, canSeed
   } = useStadiumPulse();
 
@@ -229,6 +230,8 @@ export default function Dashboard() {
                     playbook={playbook}
                     onGenerate={generatePlaybook}
                     isLoading={isGeneratingPlaybook}
+                    onExecute={executeDeployment}
+                    isExecuting={isExecuting}
                   />
                 </motion.div>
               )}
