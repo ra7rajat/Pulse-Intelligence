@@ -5,7 +5,6 @@ COPY client/package*.json ./client/
 RUN cd client && npm install
 
 # Then copy source files from both contexts
-COPY core/ ./core/
 COPY client/ ./client/
 
 WORKDIR /app/client
