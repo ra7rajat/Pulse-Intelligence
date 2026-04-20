@@ -1,0 +1,22 @@
+{
+  "samples": [
+    {
+      "name": "Normal Stadium Ambience",
+      "decibels": 85,
+      "pattern": [10, 12, 11, 15, 12, 10, 9, 11],
+      "description": "Standard background noise during a match break."
+    },
+    {
+      "name": "High Distress - Emergency",
+      "decibels": 115,
+      "pattern": [45, 88, 12, 95, 110, 30, 85, 99],
+      "description": "Loud, irregular acoustic signature indicative of possible stampede or panic."
+    },
+    {
+      "name": "Anomalous Shouting",
+      "decibels": 98,
+      "pattern": [20, 55, 60, 22, 18, 58, 62, 20],
+      "description": "Sudden spikes in high-frequency shouting patterns."
+    }
+  ]
+}

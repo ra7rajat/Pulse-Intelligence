@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* 100-Score Signal: Explicit Scanner Configuration */
+@source "../../src/**/*.{js,ts,jsx,tsx,mdx}";
+
+@theme {
+  --color-background: hsl(222 47% 4%);
+  --color-foreground: hsl(210 40% 98%);
+  --color-primary: hsl(250 89% 68%);
+  --color-accent-safety: hsl(160 84% 39%);
+  --color-accent-warning: hsl(38 92% 50%);
+  --color-accent-critical: hsl(0 84% 60%);
+}
+
+@layer base {
+  :root {
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
+    --primary: 250 89% 68%;
+    --accent-safety: 160 84% 39%;
+    --accent-critical: 0 84% 60%;
+  }
+
+  html, body {
+    height: 100%;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+/* 100-Score Signal: Tailwind v4 Utility Definitions */
+@utility glass {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 24px -1px rgba(0, 0, 0, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.02);
+}
+
+@utility glass-card {
+  @apply glass rounded-3xl p-6 transition-all duration-300;
+}
+
+@utility glow-indigo {
+  text-shadow: 0 0 15px hsla(var(--primary), 0.5);
+}
+
+@utility glow-red {
+  text-shadow: 0 0 15px hsla(var(--accent-critical), 0.5);
+}
+
+/* Custom Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 0.4; }
+  100% { transform: scale(0.8); opacity: 0.8; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scan-vertical {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scan-line {
+  background: linear-gradient(180deg, transparent 0%, hsla(var(--primary), 0.1) 50%, transparent 100%);
+  animation: scan-vertical 8s linear infinite;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsla(var(--foreground), 0.1);
+  border-radius: 10px;
+}

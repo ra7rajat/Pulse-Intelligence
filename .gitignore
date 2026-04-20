@@ -1,0 +1,97 @@
+# =========================
+# Next.js / Node.js
+# =========================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+node_modules/
+client/node_modules/
+server/node_modules/
+jspm_packages/
+
+# Next.js build output
+.next/
+client/.next/
+out/
+client/out/
+build/
+dist/
+
+# Env versions
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+client/.env
+server/.env
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Yarn / package managers
+.yarn/
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# Testing & Coverage
+coverage/
+client/coverage/
+.nyc_output/
+playwright-report/
+client/playwright-report/
+test-results/
+client/test-results/
+
+# Vercel
+.vercel
+
+# =========================
+# Python / FastAPI
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+
+# =========================
+# OS / IDE / General
+# =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
