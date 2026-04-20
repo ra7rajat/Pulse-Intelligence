@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useCallback } from 'react';
 import { Zone, ZoneStatus } from '@core/entities';
-import { StaffUnit } from '@/hooks/useStadiumPulse';
+import { StaffUnit } from '@/utils/constants';
 import { useMap } from './MapBoundary';
 
 interface Props {
