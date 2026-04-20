@@ -15,13 +15,9 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// isConfigured: true when a real Firebase project ID is present
-const isConfigured = !!firebaseConfig.projectId && !firebaseConfig.projectId.includes('your-project');
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8080';
-const firebaseApp = isConfigured
-  ? (getApps().length === 0 ? initializeApp(firebaseConfig) : getApp())
-  : null;
-const db = firebaseApp ? getFirestore(firebaseApp) : null;
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore(firebaseApp);
 
 export interface PlaybookData {
   prediction: string;
@@ -39,9 +35,9 @@ export interface PlaybookData {
  * @returns {Object} Core orchestration API, metric aggregations, and data streams.
  */
 export function useStadiumPulse() {
-  const [zones, setZones] = useState<Zone[]>(!db ? MOCK_ZONES : []);
+  const [zones, setZones] = useState<Zone[]>([]);
   const [staff, setStaff] = useState<StaffUnit[]>(MOCK_STAFF);
-  const [loading, setLoading] = useState(!db ? false : true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [playbook, setPlaybook] = useState<PlaybookData | null>(null);
   const [isGeneratingPlaybook, setIsGeneratingPlaybook] = useState(false);
@@ -68,11 +64,6 @@ export function useStadiumPulse() {
   }, [zones, staff]);
 
   useEffect(() => {
-    if (!db) {
-      setZones(MOCK_ZONES);
-      setLoading(false);
-      return;
-    }
 
     try {
       const zonesCol = collection(db, 'zones');
@@ -116,7 +107,6 @@ export function useStadiumPulse() {
 
   // Simulate live staff movement & zone fluctuation
   useEffect(() => {
-    if (isConfigured) return;
     const interval = setInterval(() => {
       setStaff(prev => prev.map(s => ({
         ...s,
@@ -178,7 +168,6 @@ export function useStadiumPulse() {
   }, [zones]);
 
   const seedDatabase = useCallback(async () => {
-    if (!db) return;
     setIsGeneratingPlaybook(true);
     try {
       for (const zone of MOCK_ZONES) {
@@ -228,7 +217,7 @@ export function useStadiumPulse() {
     staff, 
     loading, 
     error, 
-    isDemo: !isConfigured, 
+    isDemo: false, 
     playbook, 
     generatePlaybook, 
     isGeneratingPlaybook,
@@ -236,6 +225,6 @@ export function useStadiumPulse() {
     isExecuting, 
     metrics,
     seedDatabase,
-    canSeed: isConfigured && (zones.length === 0 || zones.every(z => MOCK_ZONES.find(m => m.id === z.id && m.occupancy === z.occupancy)))
+    canSeed: zones.length === 0 || zones.every(z => MOCK_ZONES.find(m => m.id === z.id && m.occupancy === z.occupancy))
   };
 }

@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
 /**
  * PulseStadium V2 Edge Security Middleware
  * CSP configured to allow Google Maps WebGL Vector API + Firebase resources.
  */
-export function middleware(request: NextRequest) {
+export function middleware() {
   const response = NextResponse.next();
 
   const cspHeader = `

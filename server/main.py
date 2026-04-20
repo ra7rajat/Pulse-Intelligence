@@ -1,22 +1,23 @@
 import os
+import time
 import uvicorn
-from fastapi import FastAPI, HTTPException, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from datetime import datetime
 from typing import List, Optional
+
+from fastapi import FastAPI, HTTPException, Depends, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from pydantic import BaseModel
+
 import vertexai
 from vertexai.generative_models import GenerativeModel
 import firebase_admin
-from datetime import datetime
 
 from config import settings
-from fastapi import Request
 
 # 100-Score Signal: Startup Security Validation
 if not settings.project_id:
     print("CRITICAL ERROR: Missing required environment variable GOOGLE_CLOUD_PROJECT")
-
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 # Initialize FastAPI with absolute Zero-Trust production hardening
 app = FastAPI(

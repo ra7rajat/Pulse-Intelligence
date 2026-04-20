@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { GlassPanel } from '../glass/GlassPanel';
-import { BarChart3, TrendingUp, Users, Activity, ExternalLink } from 'lucide-react';
+import { BarChart3, TrendingUp, Activity, ExternalLink } from 'lucide-react';
 
 export const BehavioralAnalytics = () => {
   return (

@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Command, Activity, Shield, Zap, Clock, LayoutDashboard, ShieldCheck, BarChart3,
-  Maximize2, Users, AlertTriangle, Radio, HeartPulse, ChevronDown, ChevronUp
+  Command, Activity, Shield, Zap, Clock, Users, AlertTriangle, Radio, HeartPulse, ChevronDown, ChevronUp, Maximize2
 } from 'lucide-react';
 
 import { useStadiumPulse } from '@/hooks/useStadiumPulse';
@@ -20,7 +19,7 @@ import { ZoneStatus } from '@core/entities';
 
 export default function Dashboard() {
   const {
-    zones, staff, loading, isDemo,
+    zones, staff, loading, error, isDemo,
     playbook, generatePlaybook, isGeneratingPlaybook,
     executeDeployment, isExecuting,
     metrics, seedDatabase, canSeed
@@ -38,7 +37,16 @@ export default function Dashboard() {
     return () => clearInterval(timer);
   }, []);
 
-  if (!isMounted) return <div className="min-h-screen bg-[#020617]" />;
+  if (!isMounted || loading) {
+    return (
+      <div className="min-h-screen bg-[#020617] flex items-center justify-center">
+        <Activity size={32} className="text-primary animate-pulse" />
+      </div>
+    );
+  }
+  if (error) {
+    console.error(error);
+  }
 
   const statusColor = (s: ZoneStatus) => {
     switch(s) {

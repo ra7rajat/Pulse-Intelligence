@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Zone, ZoneStatus } from '@core/entities';
 import { StaffUnit } from '@/utils/constants';
 import { useMap } from './MapBoundary';
@@ -138,7 +138,7 @@ export default function StadiumOverlay({ zones, staff, mode }: Props) {
       }
 
       const drawBgLayer = (mapOpacity: number) => {
-        if (!hasMap) drawDarkBg(ctx, W, H, t);
+        if (!hasMap) drawDarkBg(ctx, W, H);
         else { ctx.fillStyle = `rgba(2,6,23,${mapOpacity})`; ctx.fillRect(0, 0, W, H); }
       };
 
@@ -151,7 +151,7 @@ export default function StadiumOverlay({ zones, staff, mode }: Props) {
         drawHeatmap2D(ctx, W, H, getPixel, t, zones);
       } else {
         drawBgLayer(0.25);
-        drawStaffHub(ctx, W, H, getPixel, t, staff, zones);
+        drawStaffHub(ctx, W, H, getPixel, t, staff);
       }
 
       raf.current = requestAnimationFrame(frame);
@@ -177,7 +177,7 @@ export default function StadiumOverlay({ zones, staff, mode }: Props) {
    DRAWING FUNCTIONS
    ═══════════════════════════════════════════════════════ */
 
-function drawDarkBg(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
+function drawDarkBg(ctx: CanvasRenderingContext2D, w: number, h: number) {
   ctx.fillStyle = '#020617';
   ctx.fillRect(0, 0, w, h);
   const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h) * 0.5);
@@ -255,7 +255,7 @@ function draw3DOverlay(ctx: CanvasRenderingContext2D, w: number, h: number, getP
     ctx.fill();
   }
 
-  drawHUD(ctx, w, h, t);
+  drawHUD(ctx, w, h);
 }
 
 /* ─── HEATMAP MODE: 2D map overlay ─── */
@@ -381,11 +381,11 @@ function drawHeatmap2D(ctx: CanvasRenderingContext2D, w: number, h: number, getP
   ctx.textAlign = 'center';
   ctx.fillText('CROWD DENSITY', barX + barW / 2, barY + barH + 12);
 
-  drawHUD(ctx, w, h, t);
+  drawHUD(ctx, w, h);
 }
 
 /* ─── STAFF HUB: Rich tactical tracking ─── */
-function drawStaffHub(ctx: CanvasRenderingContext2D, w: number, h: number, getPixel: (lat: number, lng: number) => {x: number, y: number}, t: number, staff: StaffUnit[], zones: Zone[]) {
+function drawStaffHub(ctx: CanvasRenderingContext2D, w: number, h: number, getPixel: (lat: number, lng: number) => {x: number, y: number}, t: number, staff: StaffUnit[]) {
   const typeColor: Record<string, string> = {
     security: '#6366f1',
     medical: '#ef4444',
@@ -539,11 +539,11 @@ function drawStaffHub(ctx: CanvasRenderingContext2D, w: number, h: number, getPi
     ctx.fillText(t.l, legendX + 12 + i * 70, legendY + 3);
   });
 
-  drawHUD(ctx, w, h, t);
+  drawHUD(ctx, w, h);
 }
 
 /* ─── HUD ─── */
-function drawHUD(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
+function drawHUD(ctx: CanvasRenderingContext2D, w: number, h: number) {
   const m = 12, bLen = 18;
   ctx.strokeStyle = 'rgba(99,102,241,0.15)';
   ctx.lineWidth = 1;
